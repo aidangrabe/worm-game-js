@@ -8,6 +8,7 @@ var Worm = function() {
     var bodyPartPool = [];
     var sprite = window.assets["worm.head"];
     var x, y;
+    var step;
     var rotSpeed, speed;
 
     var turn = function(direction) {
@@ -28,15 +29,18 @@ var Worm = function() {
     var onCreate = function() {
         angle = 45;
         speed = 50;
+        step = 0;
         rotSpeed = 5;
         x = 0;
         y = 0;
-        for (var i = 0; i < 100; i++) {
+        for (var i = 0; i < 10; i++) {
             createBodyPart();
         }
     };
 
     var update = function(delta) {
+        step++;
+
         if (angle >= 360) {
             angle = 0;
         } else if (angle < 0) {
@@ -50,11 +54,18 @@ var Worm = function() {
             bodyParts[bodyPart].update(delta);
         }
 
-        var bodyPart = bodyParts.splice(0, 1)[0];
-        bodyPart.kill();
-        bodyPartPool.push(bodyPart);
+        if (step % 5 == 0) {
+            var bodyPart = bodyParts.splice(0, 1)[0];
+            bodyPart.kill();
+            bodyPartPool.push(bodyPart);
 
-        createBodyPart();
+            createBodyPart();
+        }
+
+        if (x < 0) { x = canvas.width; }
+        if (y < 0) { y = canvas.height; }
+        if (x > canvas.width) { x = 0; }
+        if (y > canvas.height) { y = 0; }
     };
 
     var render = function(ctx) {
