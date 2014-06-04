@@ -5,6 +5,7 @@ var GameScreen = function() {
     var worm;
     var earthCanvas;
     var earthCtx;
+    var nutrient;
 
     var createCanvas = function(colour) {
         var c = document.createElement('canvas');
@@ -35,6 +36,9 @@ var GameScreen = function() {
 
         worm = new Worm();
         worm.onCreate();
+
+        nutrient = new Nutrient(0, 0);
+        nutrient.jump(canvas.width, canvas.height);
     };
 
     var update = function(delta) {
@@ -56,6 +60,7 @@ var GameScreen = function() {
         earthCtx.fill();
 
         worm.render(ctx);
+        nutrient.render(ctx);
     };
 
     return {
