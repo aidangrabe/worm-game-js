@@ -10,9 +10,15 @@ var Worm = function() {
     var x, y;
     var step;
     var rotSpeed, speed;
-
+    var width = 16;
+    var height = 16;
+    var bounds;
     var turn = function(direction) {
         angle += direction * rotSpeed;
+    };
+
+    var getBounds = function() {
+        return bounds;
     };
 
     var createBodyPart = function() {
@@ -25,12 +31,20 @@ var Worm = function() {
         bodyPart.onCreate(x - 8, y - 8);
         bodyParts.push(bodyPart);
     };
+
+    var increaseLength = function(amount) {
+        var i;
+        for (i = 0; i < amount; i++) {
+            createBodyPart();
+        }
+    };
     
     var onCreate = function() {
         angle = 45;
-        speed = 50;
+        speed = 60;
         step = 0;
         rotSpeed = 5;
+        bounds = new Rectangle(x - width / 2, y - height / 2, width, height);
         x = 0;
         y = 0;
         for (var i = 0; i < 10; i++) {
@@ -66,6 +80,8 @@ var Worm = function() {
         if (y < 0) { y = canvas.height; }
         if (x > canvas.width) { x = 0; }
         if (y > canvas.height) { y = 0; }
+
+        bounds.set(x - width / 2, y - height / 2, width, height);
     };
 
     var render = function(ctx) {
@@ -81,7 +97,9 @@ var Worm = function() {
     };
 
     return {
+        getBounds: getBounds,
         getPosition: function() {return {x: x, y: y}},
+        increaseLength: increaseLength,
         onCreate: onCreate,
         render: render,
         turn: turn,

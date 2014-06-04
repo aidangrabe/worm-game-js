@@ -9,9 +9,9 @@ var Rectangle = function(x, y, width, height) {
      */
     this.intersects = function(rect) {
         return rect.x < this.x + this.width
-            || rect.y < this.y + this.height
-            || rect.y + rect.height > this.y
-            || rect.x + rect.width > this.x;
+            && rect.y < this.y + this.height
+            && rect.y + rect.height > this.y
+            && rect.x + rect.width > this.x;
     };
 
     this.left = function() {

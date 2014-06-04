@@ -50,6 +50,11 @@ var GameScreen = function() {
         }
 
         worm.update(delta);
+
+        if (worm.getBounds().intersects(nutrient.getBounds())) {
+            nutrient.jump(canvas.width, canvas.height);
+            worm.increaseLength(5);
+        }
     };
 
     var render = function(ctx) {

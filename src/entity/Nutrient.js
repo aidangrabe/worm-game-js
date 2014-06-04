@@ -9,15 +9,23 @@ var Nutrient = function(startX, startY) {
     var width   = 8,
         height  = 8;
 
-    var bounds = new Rectangle(x, y, width, height);
+    var bounds = new Rectangle(x - width / 2, y - height / 2, width, height);
     
-    this.bounds = function() {
+    this.getBounds = function() {
         return bounds;
     };
 
-    this.jump = function(width, height) {
-        x = Util.Math.random(0, width);
-        y = Util.Math.random(0, height);
+    this.getPosition = function() {
+        return {
+            x: x,
+            y: y
+        };
+    };
+
+    this.jump = function(maxWidth, maxHeight) {
+        x = Util.Math.random(0, maxWidth);
+        y = Util.Math.random(0, maxHeight);
+        bounds.set(x - width / 2, y - height / 2, width, height);
     };
 
     this.update = function(delta) {
