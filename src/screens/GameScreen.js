@@ -6,6 +6,7 @@ var GameScreen = function() {
     var earthCanvas;
     var earthCtx;
     var nutrient;
+    var eatSound;
 
     var createCanvas = function(colour) {
         var c = document.createElement('canvas');
@@ -39,6 +40,8 @@ var GameScreen = function() {
 
         nutrient = new Nutrient(0, 0);
         nutrient.jump(canvas.width, canvas.height);
+
+        eatSound = window.assets['sound.eat'];
     };
 
     var update = function(delta) {
@@ -54,6 +57,11 @@ var GameScreen = function() {
         if (worm.getBounds().intersects(nutrient.getBounds())) {
             nutrient.jump(canvas.width, canvas.height);
             worm.increaseLength(5);
+            eatSound.play();
+            setTimeout(function() {
+                var a = new Audio(eatSound.src);
+                a.play();
+            }, 50);
         }
     };
 

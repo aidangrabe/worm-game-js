@@ -4,6 +4,7 @@
 var AssetLoader = function(loadingListener) {
     var assets = {};
     var imagesToLoad = {};
+    var soundsToLoad = {};
     var numLoaded = 0;
     var numToLoad = 0;
 
@@ -23,6 +24,12 @@ var AssetLoader = function(loadingListener) {
         numToLoad++;
     };
 
+    var queueSound = function(name, url) {
+        console.log("Queuing asset: " + name);
+        soundsToLoad[name] = url;
+        numToLoad++;
+    };
+
     var load = function() {
         for (var name in imagesToLoad) {
             var image = new Image();
@@ -37,6 +44,15 @@ var AssetLoader = function(loadingListener) {
 
             image.src = imagesToLoad[name];
         }
+
+        for (var name in soundsToLoad) {
+            var snd = new Audio(soundsToLoad[name]);
+            (function(snd, name) {
+                snd.addEventListener('canplaythrough', function() {
+                    assetLoaded(name, new Audio(snd.src));
+                }, false);
+            })(snd, name);
+        }
     };
 
     var loadingComplete = function() {
@@ -45,7 +61,8 @@ var AssetLoader = function(loadingListener) {
 
     return {
         load: load,
-        queueImage: queueImage
+        queueImage: queueImage,
+        queueSound: queueSound
     };
 
 }

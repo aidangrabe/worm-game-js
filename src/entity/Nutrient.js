@@ -33,7 +33,6 @@ var Nutrient = function(startX, startY) {
     };
 
     this.render = function(ctx) {
-        ctx.fillStyle = "red";
         ctx.beginPath();
         ctx.arc(x, y, width / 2, 0, Math.PI * 2);
         ctx.fill();

@@ -11,6 +11,7 @@ var LoadingScreen = function(loadingCompleteCallback) {
         assetLoader.queueImage("worm.head", "assets/sprites/worm_head.png");
         assetLoader.queueImage("worm.body", "assets/sprites/worm_body.png");
         assetLoader.queueImage("rock", "assets/sprites/rock.png");
+        assetLoader.queueSound("sound.eat", "assets/sounds/eat.wav");
     };
 
     var onFinish = function() {};
