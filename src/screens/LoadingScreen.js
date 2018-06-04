@@ -8,17 +8,17 @@ var LoadingScreen = function(loadingCompleteCallback) {
     var progress;
 
     var loadAssets = function() {
-        assetLoader.queueImage("worm.head", "assets/sprites/worm_head.png");
-        assetLoader.queueImage("worm.body", "assets/sprites/worm_body.png");
-        assetLoader.queueImage("rock", "assets/sprites/rock.png");
-        assetLoader.queueSound("sound.eat", "assets/sounds/eat.wav");
+        assetLoader.addImage("worm.head", "sprites/worm_head.png");
+        assetLoader.addImage("worm.body", "sprites/worm_body.png");
+        assetLoader.addImage("rock", "sprites/rock.png");
+        assetLoader.addAudio("sound.eat", "sounds/eat.wav");
     };
 
     var onFinish = function() {};
 
     var onStart = function() {
         progress = 0;
-        assetLoader = new AssetLoader({
+        assetLoader = new AssetLoader("assets", {
             onLoadingUpdate: function(progress) {
                 me.progress = progress;
             },
@@ -27,7 +27,18 @@ var LoadingScreen = function(loadingCompleteCallback) {
                 console.log(assets);
                 loadingCompleteCallback(assets);
             }
+
         });
+        // assetLoader = new AssetLoader({
+        //     onLoadingUpdate: function(progress) {
+        //         me.progress = progress;
+        //     },
+        //     onLoadingComplete: function(assets) {
+        //         console.log("Loading complete");
+        //         console.log(assets);
+        //         loadingCompleteCallback(assets);
+        //     }
+        // });
 
         loadAssets();
 
