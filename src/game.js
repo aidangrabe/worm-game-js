@@ -1,50 +1,49 @@
-// Game.js
-// @author Aidan Grabe
+class Game {
 
-var Game = function() {
-    var me = this;
+    constructor() {
+        this.currentScreen = null;
+        this.canvas = null;
+    }
 
-    var assets;
-    var currentScreen;
-
-    var onKeyDown = function(event) {
+    onKeyDown(event) {
+        const currentScreen = this.currentScreen;
         if (currentScreen.onKeyDown) {
             currentScreen.onKeyDown(event.keyCode);
         }
-    };
+    }
 
-    var onStart = function() {
-        setScreen(new LoadingScreen(function(assets) {
+    onStart() {
+        this.setScreen(new LoadingScreen((assets) => {
             window.assets = assets;
-            setScreen(new GameScreen());
+            this.setScreen(new GameScreen());
         }));
-    };
-    
-    var update = function(delta) {
-        currentScreen.update(delta);
-    };
+    }
 
-    var render = function(ctx) {
+    update(delta) {
+        this.currentScreen.update(delta);
+    }
+
+    render(ctx) {
+        const canvas = this.canvas;
+
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        currentScreen.render(ctx);
-    };
+        this.currentScreen.render(ctx);
+    }
 
-    var setScreen = function(screen) {
-        if (currentScreen) {
+    setScreen(screen) {
+        const currentScreen = this.currentScreen;
+
+        if (currentScreen && currentScreen.onFinish) {
             currentScreen.onFinish();
         }
-        currentScreen = screen;
-        screen.onStart();
-    };
 
-    return {
-        onKeyDown: onKeyDown,
-        onStart: onStart,
-        update: update,
-        render: render,
-        setScreen: setScreen
-    };
-};
+        this.currentScreen = screen;
+        if (screen.onStart) {
+            screen.onStart();
+        }
+    }
+
+}
 
 var Keys = {
     ENTER: 13,
@@ -81,7 +80,7 @@ var Keys = {
     Z: 90,
 };
 
-var gameController = new Game();
+const gameController = new Game();
 
-var engine = new Engine(gameController);
+const engine = new Engine(gameController);
 engine.start();

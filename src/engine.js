@@ -35,6 +35,7 @@ var Engine = function(game) {
 
     var start = function() {
         game.game = me;
+        game.canvas = canvas;
         game.onStart();
         gameLoop();
     };
