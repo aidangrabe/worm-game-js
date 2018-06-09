@@ -92,7 +92,7 @@ var Worm = function() {
         ctx.save();
         ctx.translate(x, y);
         ctx.rotate(Math.PI / 180 * angle);
-        ctx.drawImage(sprite, -8, -8);
+        ctx.drawImage(sprite, -16, -16);
         ctx.restore();
     };
 

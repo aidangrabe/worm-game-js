@@ -1,47 +1,44 @@
-class Game {
+class Game extends Engine {
 
     constructor() {
-        this.currentScreen = null;
-        this.canvas = null;
+        super(document, 800, 600);
+
+        this.currentScreen = new Screen();
     }
 
-    onKeyDown(event) {
-        const currentScreen = this.currentScreen;
-        if (currentScreen.onKeyDown) {
-            currentScreen.onKeyDown(event.keyCode);
-        }
-    }
+    // onKeyDown(event) {
+    //     const currentScreen = this.currentScreen;
+    //     if (currentScreen.onKeyDown) {
+    //         currentScreen.onKeyDown(event.keyCode);
+    //     }
+    // }
 
-    onStart() {
-        this.setScreen(new LoadingScreen((assets) => {
-            window.assets = assets;
-            this.setScreen(new GameScreen());
-        }));
-    }
+    // onStart() {
+    //     this.setScreen(new LoadingScreen((assets) => {
+    //         window.assets = assets;
+    //         this.setScreen(new GameScreen());
+    //     }));
+    // }
 
-    update(delta) {
-        this.currentScreen.update(delta);
-    }
+    // render(ctx) {
+    //     const canvas = this.canvas;
 
-    render(ctx) {
-        const canvas = this.canvas;
+    //     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    //     this.currentScreen.render(ctx);
+    // }
 
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        this.currentScreen.render(ctx);
-    }
+    // setScreen(screen) {
+    //     const currentScreen = this.currentScreen;
 
-    setScreen(screen) {
-        const currentScreen = this.currentScreen;
+    //     if (currentScreen && currentScreen.onFinish) {
+    //         currentScreen.onFinish();
+    //     }
 
-        if (currentScreen && currentScreen.onFinish) {
-            currentScreen.onFinish();
-        }
-
-        this.currentScreen = screen;
-        if (screen.onStart) {
-            screen.onStart();
-        }
-    }
+    //     this.currentScreen = screen;
+    //     if (screen.onStart) {
+    //         screen.onStart();
+    //     }
+    // }
 
 }
 
@@ -80,7 +77,4 @@ var Keys = {
     Z: 90,
 };
 
-const gameController = new Game();
-
-const engine = new Engine(gameController);
-engine.start();
+const game = new Game();

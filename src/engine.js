@@ -11,40 +11,53 @@ var requestAnimFrame = (function(){
         };
 })();
 
-var canvas = document.createElement('canvas');
-var ctx = canvas.getContext('2d');
+class Engine {
 
-canvas.width = 480;
-canvas.height = 320;
-document.body.appendChild(canvas);
+    constructor(doc, width, height) {
+        // {backgroundColor : 0x1099bb}
+        const app = new PIXI.Application(width, height);
+        app.ticker.add((delta) => this.gameLoop(delta));
+        doc.body.appendChild(app.view);
+        
+        this.app = app;
+        this.mainStage = app.stage;
 
-var Engine = function(game) {
-    var me = this;
-    var lastTime = Date.now();
-
-    var gameLoop = function() {
-        var now = Date.now();
-        var deltaTime = (now - lastTime) / 1000.0;
-
-        game.update(deltaTime);
-        game.render(ctx);
-
-        lastTime = now;
-        requestAnimFrame(gameLoop);
+        this._currentScreen = null;
     }
 
-    var start = function() {
-        game.game = me;
-        game.canvas = canvas;
-        game.onStart();
-        gameLoop();
-    };
+    set currentScreen(screen) {
+        const currentScreen = this._currentScreen;
 
-    return {
-        height: canvas.height,
-        start: start,
-        width: canvas.width
-    };
+        // handle old screen events
+        if (currentScreen != null) {
+            currentScreen.removeChild(currentScreen.stage);
+            currentScreen.leave();
+        }
+
+        // handle new screen events
+        screen.enter(new PIXI.Container());
+        this._currentScreen = screen;
+    }
+
+    get currentScreen() {
+        return this._currentScreen;
+    }
+
+    gameLoop(delta) {
+        this.preUpdate(delta);
+        this.update(delta);
+        
+        this._currentScreen.update();
+    }
+
+    preUpdate(delta) {
+        this._currentScreen.preUpdate(delta);
+    }
+
+    update(delta) {
+        this._currentScreen.update(delta);
+    }
+
 }
 
 var Input = {
