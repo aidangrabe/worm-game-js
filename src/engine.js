@@ -1,15 +1,3 @@
-// Engine.js
-// @author Aidan Grabe
-
-// shim for requestAnimationFrame
-var requestAnimFrame = (function(){
-    return window.requestAnimationFrame     || window.webkitRequestAnimationFrame  ||
-        window.mozRequestAnimationFrame     || window.oRequestAnimationFrame       ||
-        window.msRequestAnimationFrame      ||
-        function(callback){
-            window.setTimeout(callback, 1000 / 60);
-        };
-})();
 
 class Engine {
 
@@ -30,12 +18,16 @@ class Engine {
 
         // handle old screen events
         if (currentScreen != null) {
+            this.app.stage.removeChild(currentScreen.stage);
             currentScreen.removeChild(currentScreen.stage);
             currentScreen.leave();
         }
 
         // handle new screen events
-        screen.enter(new PIXI.Container());
+        screen.stage = new PIXI.Container();
+        screen.bounds = this.app.screen;
+        screen.enter();
+        this.app.stage.addChild(screen.stage);
         this._currentScreen = screen;
     }
 

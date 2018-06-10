@@ -1,6 +1,14 @@
-//
+class Entity {
 
-var Entity = function() {
-    
-};
+}
 
+class Actor extends Entity {
+
+    constructor(sprite) {
+        this.sprite = sprite;
+    }
+
+    update(delta) {
+    }
+
+}

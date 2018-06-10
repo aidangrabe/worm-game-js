@@ -3,7 +3,9 @@ class Game extends Engine {
     constructor() {
         super(document, 800, 600);
 
-        this.currentScreen = new Screen();
+        this.currentScreen = new LoadingScreen((assets) => {
+            this.assets = assets;
+        });
     }
 
     // onKeyDown(event) {

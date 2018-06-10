@@ -42,15 +42,12 @@ class AssetLoader {
             this._onAssetLoaded(name, image);
         }
         image.src = this._imagesToLoad[name];
-
-        console.log(`loading image: ${this._numAssetsLoaded}/${this._numAssetsToLoad}`)
     }
 
     _loadAudio(name, path) {
         let audio = new Audio(this._audioToLoad[name]);
         audio.addEventListener('canplaythrough', () => {
             this._onAssetLoaded(name, new Audio(audio.src));
-            console.log(`snd loaded: ${this._numAssetsLoaded}/${this._numAssetsToLoad}`)
         });
     }
 
@@ -66,7 +63,6 @@ class AssetLoader {
         this._numAssetsLoaded++;
         this._updateListeners();
         this._checkComplete();
-        console.log(`asset loaded: ${this._numAssetsLoaded}/${this._numAssetsToLoad}`)
     }
 
     _updateListeners() {
