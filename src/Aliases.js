@@ -1,5 +1,8 @@
 const log = console.log;
 
+// Victor
+const Vector = Victor;
+
 // PIXI aliases
 const Container = PIXI.Container;
 const Graphics = PIXI.Graphics;

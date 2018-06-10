@@ -38,8 +38,6 @@ class Engine {
     gameLoop(delta) {
         this.preUpdate(delta);
         this.update(delta);
-        
-        this._currentScreen.update();
     }
 
     preUpdate(delta) {

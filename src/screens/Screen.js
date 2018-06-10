@@ -3,6 +3,7 @@ class Screen {
     constructor() {
         this.stage = null;  // PIXI.Container
         this.bounds = null; // PIXI.Rectangle
+        this.actors = [];
     }
 
     enter() {
@@ -15,6 +16,16 @@ class Screen {
     }
 
     update(delta) {
+        const actors = this.actors;
+        
+        for (const actor of actors) {
+            actor.update(delta);
+        }
+    }
+
+    addActor(actor) {
+        this.actors.push(actor);
+        this.stage.addChild(actor.sprite);
     }
 
     get width() {

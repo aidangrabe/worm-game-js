@@ -6,11 +6,8 @@ class GameScreen extends Screen {
     }
 
     enter() {
-        this.stage.addChild(this.worm.sprite);
-    }
-
-    update() {
-
+        super.enter();
+        this.addActor(this.worm);
     }
 
 }

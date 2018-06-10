@@ -2,6 +2,17 @@ class Worm extends Actor {
 
     constructor() {
         super(Sprite.fromImage(Assets.sprite.wormHead));
+
+        this.sprite.pivot = {
+            x: this.width / 2,
+            y: this.height / 2
+        }
+
+        const speed = 4;
+        const velocity = new VelocityTrait(0);
+
+        this.addTrait(velocity);
+        this.addTrait(new FaceDirectionTrait(velocity, -Math.PI / 2));
     }
 
 }
@@ -113,9 +124,3 @@ class Worm extends Actor {
 //     };
 
 // };
-
-
-Direction = {
-    LEFT: -1,
-    RIGHT: 1
-};
