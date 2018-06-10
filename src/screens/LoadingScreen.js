@@ -5,21 +5,15 @@ class LoadingScreen extends Screen {
         super();
 
         this.assets = assets;
+        this.callback = callback;
 
         this.progressText = new Text("Loading 0%", Font.LoadingScreen);
         this.progressText.anchor = CenterAnchor;
+    }
 
-        this.progress = 0;
-        this.assetLoader = new AssetLoader("assets", {
-            onLoadingUpdate: (loaded, total) => {
-                this.progress = loaded / total * 100;
-                this.progressText.text = `Loading ${this.progress}%`;
-                this.loadingBar.progress = this.progress;
-            },
-            onLoadingComplete: (assets) => {
-                callback(assets);
-            }
-        });
+    updateLoadingUi(progress) {
+        this.progressText.text = `Loading ${progress}%`;
+        this.loadingBar.progress = progress;
     }
 
     enter() {
@@ -33,26 +27,22 @@ class LoadingScreen extends Screen {
         this.stage.addChild(this.progressText);
         this.stage.addChild(loadingBar.sprite);
 
-        this.progress = 0;
         this.loadingBar = loadingBar;
 
         this.loadAssets();
     }
 
     loadAssets() {
-        const assetLoader = this.assetLoader;
         const sprites = this.assets.sprite;
-        const audio = this.assets.audio;
 
         for (const assetName in sprites) {
-            assetLoader.addImage(assetName, sprites[assetName]);
+            Loader.add(sprites[assetName]);
         }
 
-        for (const assetName in audio) {
-            assetLoader.addAudio(assetName, audio[assetName]);
-        }
-
-        assetLoader.load();
+        Loader.onProgress.add((e) => this.updateLoadingUi(e.progress));
+        Loader.load((loader, resources) => {
+            this.callback(resources);
+        });
     }
 
 }
