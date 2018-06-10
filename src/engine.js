@@ -49,17 +49,3 @@ class Engine {
     }
 
 }
-
-var Input = {
-    keysDown: new Array(120),
-    isKeyDown: function(key) {
-        return this.keysDown[key];
-    }
-};
-
-window.addEventListener("keydown", function(event) {
-    Input.keysDown[event.keyCode] = true;
-});
-window.addEventListener("keyup", function(event) {
-    Input.keysDown[event.keyCode] = false;
-});
