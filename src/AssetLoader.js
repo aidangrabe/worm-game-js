@@ -7,7 +7,7 @@ class AssetLoader {
         this._listener = listener;
 
         this._assets = {};
-        this._assetPath = assetPath;
+        this._assetPath = ""; // TODO
         this._numAssetsToLoad = 0;
         this._numAssetsLoaded = 0;
 

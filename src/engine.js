@@ -19,7 +19,7 @@ class Engine {
         // handle old screen events
         if (currentScreen != null) {
             this.app.stage.removeChild(currentScreen.stage);
-            currentScreen.removeChild(currentScreen.stage);
+            // currentScreen.stage.removeChild(currentScreen.stage);
             currentScreen.leave();
         }
 

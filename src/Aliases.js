@@ -1,8 +1,9 @@
 const log = console.log;
 
 // PIXI aliases
-const Graphics = PIXI.Graphics;
 const Container = PIXI.Container;
+const Graphics = PIXI.Graphics;
+const Sprite = PIXI.Sprite;
 const Text = PIXI.Text;
 
 // Utils

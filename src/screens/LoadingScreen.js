@@ -1,8 +1,10 @@
 
 class LoadingScreen extends Screen {
 
-    constructor(callback) {
+    constructor(assets, callback) {
         super();
+
+        this.assets = assets;
 
         this.progressText = new Text("Loading 0%", Font.LoadingScreen);
         this.progressText.anchor = CenterAnchor;
@@ -39,11 +41,16 @@ class LoadingScreen extends Screen {
 
     loadAssets() {
         const assetLoader = this.assetLoader;
+        const sprites = this.assets.sprite;
+        const audio = this.assets.audio;
 
-        assetLoader.addImage("worm.head", "sprites/worm_head.png");
-        assetLoader.addImage("worm.body", "sprites/worm_body.png");
-        assetLoader.addImage("rock", "sprites/rock.png");
-        assetLoader.addAudio("sound.eat", "sounds/eat.wav");
+        for (const assetName in sprites) {
+            assetLoader.addImage(assetName, sprites[assetName]);
+        }
+
+        for (const assetName in audio) {
+            assetLoader.addAudio(assetName, audio[assetName]);
+        }
 
         assetLoader.load();
     }
