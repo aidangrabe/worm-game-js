@@ -2,11 +2,11 @@ class GameScreen extends Screen {
 
     constructor() {
         super();
-        this.worm = new Worm();
     }
 
     enter() {
         super.enter();
+        this.worm = new Worm(this);
         this.addActor(this.worm);
     }
 

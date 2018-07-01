@@ -15,7 +15,6 @@ class PlayerMovement extends Trait {
     rotate(direction) {
         const velocity = this.velocity;
         velocity.rotateDeg(this.rotationSpeed * direction);
-        log(velocity.angleDeg() + this.rotationSpeed * direction);
     }
 
     update(delta) {
