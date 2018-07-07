@@ -18,6 +18,8 @@ class PlayerMovement extends Trait {
     }
 
     update(delta) {
+
+
         if (Input.isKeyPressed(Key.RIGHT)) {
             this.rotate(Direction.CLOCKWISE);
         }

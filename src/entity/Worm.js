@@ -13,7 +13,7 @@ class Worm extends Actor {
         this.sprite.y = this.height / 2;
 
         const speed = 4;
-        const velocity = new VelocityTrait(speed);
+        const velocity = new WormMovementTrait(speed);
 
         // add the traits
         this.addTrait(velocity);
