@@ -2,8 +2,11 @@
 class Engine {
 
     constructor(doc, width, height) {
-        // {backgroundColor : 0x1099bb}
-        const app = new PIXI.Application(width, height);
+        const options = {
+            antialias: true
+        };
+
+        const app = new PIXI.Application(width, height, options);
         app.ticker.add((delta) => this.gameLoop(delta));
         doc.body.appendChild(app.view);
         
@@ -24,6 +27,7 @@ class Engine {
         }
 
         // handle new screen events
+        screen.app = this.app;
         screen.stage = new PIXI.Container();
         screen.bounds = this.app.screen;
         screen.enter();
