@@ -6,13 +6,16 @@
  */
 class Nutrient extends Actor {
 
-    constructor() {
+    constructor(screen) {
         super(Sprite.fromImage(Assets.sprite.nutrient));
+
+        this.screen = screen;
     }
 
-    jumpToRandomPlace(screen) {
-        const maxX = screen.width;
-        const maxY = screen.height;
+    jumpToRandomPlace() {
+        const screen = this.screen;
+        const maxX = screen.width - this.sprite.width;
+        const maxY = screen.height - this.sprite.height;
 
         this.sprite.position = {
             x: Util.Math.random(0, maxX),

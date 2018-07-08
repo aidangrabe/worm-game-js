@@ -26,7 +26,9 @@ class Screen {
 
     addActor(actor) {
         this.actors.push(actor);
-        this.stage.addChild(actor.sprite);
+        if (actor.sprite) {
+            this.stage.addChild(actor.sprite);
+        }
     }
 
     get width() {

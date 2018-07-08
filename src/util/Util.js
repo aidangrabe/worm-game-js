@@ -13,6 +13,10 @@ class _GameMath {
         return Math.random() * (max - min) + min;
     }
 
+    circlesIntersect(x0, y0, r0, x1, y1, r1) {
+        return Math.hypot(x0-x1, y0-y1) <= (r0 + r1);
+    }
+
 }
 
 /**
