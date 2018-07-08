@@ -1,41 +1,23 @@
-// Nutrient.js
-// @author Aidan Grabe
+/**
+ * This class contains logic for the nutrients that the Worm can eat. A nutrient
+ * will jump to a random place on screen when the worm eats.
+ * It should jump to a random, free place on screen, so it should not land on 
+ * the worm's head or body.
+ */
+class Nutrient extends Actor {
 
-var Nutrient = function(startX, startY) {
-    var me = this;
+    constructor() {
+        super(Sprite.fromImage(Assets.sprite.nutrient));
+    }
 
-    var x = startX,
-        y = startY;
-    var width   = 8,
-        height  = 8;
+    jumpToRandomPlace(screen) {
+        const maxX = screen.width;
+        const maxY = screen.height;
 
-    var bounds = new Rectangle(x - width / 2, y - height / 2, width, height);
-    
-    this.getBounds = function() {
-        return bounds;
-    };
+        this.sprite.position = {
+            x: Util.Math.random(0, maxX),
+            y: Util.Math.random(0, maxY),
+        }
+    }
 
-    this.getPosition = function() {
-        return {
-            x: x,
-            y: y
-        };
-    };
-
-    this.jump = function(maxWidth, maxHeight) {
-        x = Util.Math.random(0, maxWidth);
-        y = Util.Math.random(0, maxHeight);
-        bounds.set(x - width / 2, y - height / 2, width, height);
-    };
-
-    this.update = function(delta) {
-        
-    };
-
-    this.render = function(ctx) {
-        ctx.beginPath();
-        ctx.arc(x, y, width / 2, 0, Math.PI * 2);
-        ctx.fill();
-    };
-
-};
+}
