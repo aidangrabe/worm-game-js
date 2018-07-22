@@ -1,7 +1,7 @@
 class Game extends Engine {
 
     constructor() {
-        super(document, 800, 600);
+        super(document, 600, 336);
 
         this.currentScreen = new LoadingScreen(Assets, (assets) => {
             this.assets = assets;

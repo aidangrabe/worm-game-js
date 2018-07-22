@@ -26,7 +26,7 @@ class Worm extends Actor {
 
         // add the traits
         this.addTrait(velocity);
-        this.addTrait(new FaceDirectionTrait(velocity, -Math.PI / 2));
+        this.addTrait(new FaceDirectionTrait(velocity, 0));
         this.addTrait(new PlayerMovement(velocity));
         this.addTrait(new OffStageDetectorTrait(screen, this.sprite.pivot.x));
 
