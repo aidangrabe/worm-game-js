@@ -11,6 +11,10 @@ class Nutrient extends Actor {
 
         this.screen = screen;
         this.worm = worm;
+
+        this.sprite.pivot = {
+            x: 8, y: 8
+        }
     }
 
     /**
