@@ -6,21 +6,47 @@
  */
 class Nutrient extends Actor {
 
-    constructor(screen) {
+    constructor(screen, worm) {
         super(Sprite.fromImage(Assets.sprite.nutrient));
 
         this.screen = screen;
+        this.worm = worm;
     }
 
+    /**
+     * Jump the sprite to a random location on screen. If the position is not
+     * free, try to jump again until a free spot is found.
+     */
     jumpToRandomPlace() {
+        const sprite = this.sprite;
+
+        // keep jumping to random places until one is free
+        do {
+            this._moveToRandomPosition()
+        } while (!this._isPositionFree(sprite.x, sprite.y));
+    }
+
+    /**
+     * Check if the position given by (x, y) is collision free.
+     */
+    _isPositionFree(x, y) {
+        const sprite = this.sprite;
+
+        // TODO check against the body parts too
+        return Util.Math.pointInCircle(x, y, sprite.x, sprite.y, sprite.width / 2);
+    }
+
+    /**
+     * Move the sprite to a random location within the screen.
+     */
+    _moveToRandomPosition() {
         const screen = this.screen;
         const maxX = screen.width - this.sprite.width;
         const maxY = screen.height - this.sprite.height;
+        const sprite = this.sprite;
 
-        this.sprite.position = {
-            x: Util.Math.random(0, maxX),
-            y: Util.Math.random(0, maxY),
-        }
+        sprite.position.x = Util.Math.random(0, maxX);
+        sprite.position.y = Util.Math.random(0, maxY);
     }
 
 }

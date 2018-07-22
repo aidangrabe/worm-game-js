@@ -1,35 +1,23 @@
-//
+/**
+ * 
+ */
+class WormBodyPart extends Actor {
 
-var WormBodyPart = function() {
-    var that = this;
-    var sprite = window.assets["worm.body"];
-    var alive;
-    var x, y;
+    constructor(x, y, life, callbacks) {
+        super(Sprite.fromImage(Assets.sprite.wormBody));
 
-    var kill = function() {
-        alive = false;
-    };
-    
-    var onCreate = function(nx, ny) {
-        alive = true;
-        x = nx;
-        y = ny;
-    };
-    
-    var update = function(delta) {
-    };
-    
-    var render = function(ctx) {
-        if (alive) {
-            ctx.drawImage(sprite, x, y);
+        this.life = life;
+        this.sprite.x = x;
+        this.sprite.y = y;
+        this.callbacks = callbacks;
+    }
+
+    decay(amount) {
+        this.life -= amount;
+
+        if (this.life <= 0) {
+            this.callbacks.onDestroyBodyPart(this);
         }
-    };
-
-    return {
-        kill: kill,
-        onCreate: onCreate,
-        render: render,
-        update: update
-    };
+    }
 
 }
