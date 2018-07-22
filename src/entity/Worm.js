@@ -9,6 +9,10 @@ class Worm extends Actor {
         this.screen = screen;
         this.callbacks = callbacks;
 
+        // whether the Worm is alive or not, false will stop movement and
+        // decaying
+        this.alive = true;
+
         // centre the pivot so the head rotates around its centre
         this.sprite.pivot = {
             x: this.width / 2,
@@ -37,7 +41,7 @@ class Worm extends Actor {
         super.update(delta);
 
         const sprite = this.sprite;
-        const bodyPart = new WormBodyPart(sprite.x - sprite.pivot.x, 
+        const bodyPart = new WormBodyPart(this, sprite.x - sprite.pivot.x, 
             sprite.y - sprite.pivot.y, this.bodyPartLife, this);
 
         this.body.push(bodyPart);
@@ -60,6 +64,15 @@ class Worm extends Actor {
 
     lengthen(amount) {
         this.bodyPartLife += amount;
+    }
+
+    /**
+     * Kill the Worm :O
+     * Will cause the Worm to stop moving and stop decaying (ironically!).
+     */
+    kill() {
+        this.alive = false;
+        this.clearTraits();
     }
 
 }

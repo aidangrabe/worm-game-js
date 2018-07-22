@@ -23,6 +23,10 @@ class Actor extends Entity {
         this.traits.push(trait);
     }
 
+    clearTraits() {
+        this.traits = [];
+    }
+
     removeTrait(trait) {
         const index = this.traits.indexOf(trait);
         if (index != -1) {

@@ -42,7 +42,7 @@ class GameScreen extends Screen {
     }
 
     onWormHitBody() {
-        log("Game Over!");
+        this.worm.kill();
     }
 
 }

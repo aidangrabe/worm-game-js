@@ -4,9 +4,10 @@
  */
 class WormBodyPart extends Actor {
 
-    constructor(x, y, life, callbacks) {
+    constructor(worm, x, y, life, callbacks) {
         super(Sprite.fromImage(Assets.sprite.wormBody));
 
+        this.worm = worm;
         this.life = life;
         this.sprite.x = x;
         this.sprite.y = y;
@@ -21,7 +22,21 @@ class WormBodyPart extends Actor {
         this.isActive = false;
     }
 
+    /**
+     * Decay the body part (ew!).
+     * This is like a timer for when the body part will be destroyed, each step
+     * decay will remove life from the body part and when it reaches 0 it will 
+     * be destroyed.
+     * 
+     * @param {Number} amount the amount to decay the body parts life by.
+     */
     decay(amount) {
+
+        if (!this.worm.alive) {
+            // don't decay if the worm is not alive
+            return;
+        }
+
         this.life -= amount;
         this.activeDelay -= amount;
 
