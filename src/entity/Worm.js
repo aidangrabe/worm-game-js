@@ -41,8 +41,8 @@ class Worm extends Actor {
         super.update(delta);
 
         const sprite = this.sprite;
-        const bodyPart = new WormBodyPart(this, sprite.x - sprite.pivot.x, 
-            sprite.y - sprite.pivot.y, this.bodyPartLife, this);
+        const bodyPart = new WormBodyPart(this, sprite.x, sprite.y, 
+            this.bodyPartLife, this);
 
         this.body.push(bodyPart);
 

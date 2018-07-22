@@ -5,5 +5,12 @@ const Font = {
         fill: '#FFFFFF',
         fontFamily: 'Arial',
         fontSize: '48px'
+    },
+
+    ScoreText: {
+        fill: '#FFFFFF',
+        fontFamily: 'Arial',
+        fontSize: '16px'
     }
+
 }

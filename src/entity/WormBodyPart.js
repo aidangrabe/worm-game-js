@@ -13,6 +13,11 @@ class WormBodyPart extends Actor {
         this.sprite.y = y;
         this.callbacks = callbacks;
 
+        this.sprite.pivot = {
+            x: this.sprite.width / 2,
+            y: this.sprite.height / 2
+        }
+
         // body parts collide with the head immediately as they are created at
         // the same position. We need this active delay so we can ignore 
         // collisions until the body part is clear or the head for the first 

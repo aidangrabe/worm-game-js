@@ -12,6 +12,7 @@ class GameScreen extends Screen {
 
         this.worm = new Worm(this, this);
         this.bodyPartLayer = new Container();
+        this.scoreKeeper = new ScoreKeeper();
 
         this.earthLayer = new EarthLayer(this.worm);
         this.nutrient = new Nutrient(this);
@@ -19,11 +20,20 @@ class GameScreen extends Screen {
 
         this.backgroundColor = this.earthLayer.EAT_COLOR;
 
+        // layers
         this.addActor(this.earthLayer);
         this.stage.addChild(this.bodyPartLayer);
+
         this.addActor(this.worm);
         this.addActor(this.nutrient);
+
+        // extra managers
+
+        this.addActor(this.scoreKeeper);
         this.addActor(new CollisionManager(this.worm, this.nutrient, this));
+        this.addActor(new GameHud(this, this.scoreKeeper));
+
+        // TODO add HUD
     }
 
     onCreateBodyPart(bodyPart) {
@@ -39,6 +49,7 @@ class GameScreen extends Screen {
     onWormHitNutrient() {
         this.nutrient.jumpToRandomPlace();
         this.worm.lengthen(15);
+        this.scoreKeeper.increment();
     }
 
     onWormHitBody() {
