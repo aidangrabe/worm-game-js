@@ -18,13 +18,19 @@ class PlayerMovement extends Trait {
     }
 
     update(delta) {
-
-
         if (Input.isKeyPressed(Key.RIGHT)) {
             this.rotate(Direction.CLOCKWISE);
         }
         if (Input.isKeyPressed(Key.LEFT)) {
             this.rotate(Direction.ANTI_CLOCKWISE);
+        }
+
+        if (Input.isMouseButtonPressed(MouseButton.LEFT)) {
+            if (Input.mousePosition.x < Game.WIDTH / 2) {
+                this.rotate(Direction.ANTI_CLOCKWISE);
+            } else {
+                this.rotate(Direction.CLOCKWISE);
+            }
         }
     }
 

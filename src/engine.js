@@ -2,6 +2,9 @@
 class Engine {
 
     constructor(doc, width, height) {
+        this.WIDTH = width;
+        this.HEIGHT = height;
+
         const options = {
             antialias: true
         };

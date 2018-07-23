@@ -1,4 +1,4 @@
-class Game extends Engine {
+class _Game extends Engine {
 
     constructor() {
         super(document, 600, 336);
@@ -11,4 +11,4 @@ class Game extends Engine {
 
 }
 
-const game = new Game();
+const Game = new _Game();

@@ -1,26 +1,66 @@
 class _Input {
 
-    constructor() {
-        // this.keysDown = new Array(120),
-        this.keysDown = {};
+    constructor(win) {
+        this.keysDown = new Array(120);
+        this.mouseButtonsDown = {};
+
+        this.mousePosition = {
+            x: -1, y: -1
+        };
+
+        // setup the event listeners on the window
+        win.addEventListener("keydown", (event) => {
+            Input.keysDown[event.keyCode] = true;
+        });
+        win.addEventListener("keyup", (event) => {
+            Input.keysDown[event.keyCode] = false;
+        });
+
+        win.addEventListener("touchstart", (event) => {
+            const touch = event.touches[0]
+            this._updateMousePosition(touch.clientX, touch.clientY);
+            this.mouseButtonsDown[MouseButton.LEFT] = true;
+        });
+        win.addEventListener("touchend", (event) => {
+            this.mouseButtonsDown[MouseButton.LEFT] = false;
+        });
+
+        win.addEventListener("mousedown", (event) => {
+            // TODO handle these better
+            this.mouseButtonsDown[event.button] = true;
+        });
+        win.addEventListener("mouseup", (event) => {
+            this.mouseButtonsDown[event.button] = false;
+        });
+        win.addEventListener("mousemove", (event) => {
+            this._updateMousePosition(event.clientX, event.clientY);
+        });
+    }
+
+    _updateMousePosition(x, y) {
+        this.mousePosition.x = x;
+        this.mousePosition.y = y;
     }
 
     isKeyPressed(key) {
         return this.keysDown[key];
     }
 
+    isMouseButtonPressed(mouseButton) {
+        return this.mouseButtonsDown[mouseButton];
+    }
+
 }
 
-const Input = new _Input();
+const Input = new _Input(window);
 
-window.addEventListener("keydown", function(event) {
-    Input.keysDown[event.keyCode] = true;
-});
-window.addEventListener("keyup", function(event) {
-    Input.keysDown[event.keyCode] = false;
-});
+const MouseButton = {
+    LEFT: 0,
+    MIDDLE: 1,
+    RIGHT: 2
+}
 
-const  Key = {
+const Key = {
     ENTER: 13,
     SPACE: 32,
     LEFT: 37,

@@ -28,7 +28,6 @@ class GameScreen extends Screen {
         this.addActor(this.nutrient);
 
         // extra managers
-
         this.addActor(this.scoreKeeper);
         this.addActor(new CollisionManager(this.worm, this.nutrient, this));
         this.addActor(new GameHud(this, this.scoreKeeper));
