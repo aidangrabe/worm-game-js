@@ -1,10 +1,11 @@
 
 class LoadingScreen extends Screen {
 
-    constructor(assets, callback) {
+    constructor(assets, soundInstance, callback) {
         super();
 
         this.assets = assets;
+        this.soundInstance = soundInstance;
         this.callback = callback;
 
         this.progressText = new Text("Loading 0%", Font.LoadingScreen);
@@ -34,9 +35,17 @@ class LoadingScreen extends Screen {
 
     loadAssets() {
         const sprites = this.assets.sprite;
+        const audio = this.assets.audio;
 
+        // load images
         for (const assetName in sprites) {
             Loader.add(sprites[assetName]);
+        }
+        
+        // load audio
+        for (const id in audio) {
+            this.soundInstance.registerSound(id, audio[id]);
+            Loader.add(audio[id]);
         }
 
         Loader.onProgress.add((e) => this.updateLoadingUi(e.progress));

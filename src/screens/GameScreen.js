@@ -49,6 +49,7 @@ class GameScreen extends Screen {
         this.nutrient.jumpToRandomPlace();
         this.worm.lengthen(15);
         this.scoreKeeper.increment();
+        Sound.play("wormEat")
     }
 
     onWormHitBody() {

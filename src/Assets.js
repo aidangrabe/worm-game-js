@@ -8,7 +8,7 @@ var Assets = {
     },
 
     "audio": {
-        "worm_eat": "assets/sounds/eat.wav",
+        "wormEat": "assets/sounds/eat.wav",
     }
 
 }
