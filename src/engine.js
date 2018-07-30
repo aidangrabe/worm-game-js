@@ -12,7 +12,7 @@ class Engine {
         const app = new PIXI.Application(width, height, options);
         app.ticker.add((delta) => this.gameLoop(delta));
         doc.body.appendChild(app.view);
-        
+
         this.app = app;
         this.mainStage = app.stage;
 
@@ -53,6 +53,16 @@ class Engine {
 
     update(delta) {
         this._currentScreen.update(delta);
+    }
+
+    /**
+     * Make the canvas fullscreen in that stretches to fill the visible browser
+     * window.
+     */
+    stretchToFitScreen() {
+        const app = this.app;
+        app.view.style.width = window.innerWidth + "px";
+        app.view.style.height = window.innerHeight + "px";
     }
 
 }
