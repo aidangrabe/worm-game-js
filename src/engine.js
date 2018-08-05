@@ -1,4 +1,7 @@
-
+/**
+ * The main Engine class which handles rendering the game and handling which
+ * screen is currently shown.
+ */
 class Engine {
 
     constructor(doc, width, height) {
@@ -10,11 +13,22 @@ class Engine {
         };
 
         const app = new PIXI.Application(width, height, options);
+        const mainStage = app.stage;
+
         app.ticker.add((delta) => this.gameLoop(delta));
         doc.body.appendChild(app.view);
 
         this.app = app;
-        this.mainStage = app.stage;
+        this.mainStage = mainStage;
+
+        // the stage needs to be set as interactive in order to receive the 
+        // touch events
+        mainStage.interactive = true;
+
+        // the stage hitArea needs to be set manually, or the touch/click events
+        // will only trigger on Sprites within the stage that get clicked
+        mainStage.hitArea = new Rect(0, 0, width, height);
+        Input.attachListeners(mainStage);
 
         this._currentScreen = null;
     }
@@ -34,6 +48,7 @@ class Engine {
         screen.stage = new PIXI.Container();
         screen.bounds = this.app.screen;
         screen.enter();
+
         this.app.stage.addChild(screen.stage);
         this._currentScreen = screen;
     }

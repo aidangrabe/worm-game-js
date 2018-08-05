@@ -2,7 +2,8 @@ class _Input {
 
     constructor(win) {
         this.keysDown = new Array(120);
-        this.mouseButtonsDown = {};
+        this.touches = {};
+        this.activeTouchIndex = -1;
 
         this.mousePosition = {
             x: -1, y: -1
@@ -15,26 +16,31 @@ class _Input {
         win.addEventListener("keyup", (event) => {
             Input.keysDown[event.keyCode] = false;
         });
+    }
 
-        win.addEventListener("touchstart", (event) => {
-            const touch = event.touches[0]
-            this._updateMousePosition(touch.clientX, touch.clientY);
-            this.mouseButtonsDown[MouseButton.LEFT] = true;
-        });
-        win.addEventListener("touchend", (event) => {
-            this.mouseButtonsDown[MouseButton.LEFT] = false;
-        });
+    /**
+     * Attach the mouse/touch listeners to the given Stage.
+     * 
+     * @param {Stage} stage the stage to attach the listeners to.
+     */
+    attachListeners(stage) {
+        stage
+            .on('pointerdown', (e) => {
+                this.activeTouchIndex = e.data.identifier;
+                this.mousePosition = e.data.global;
+            })
+            .on('pointerup', (e) => {
+                if (this.activeTouchIndex == e.data.identifier) {
+                    this.activeTouchIndex = -1;
+                }
+            })
+            .on('pointermove', (e) => {
+                const index = e.data.identifier;
+                const mousePosition = e.data.global;
 
-        win.addEventListener("mousedown", (event) => {
-            // TODO handle these better
-            this.mouseButtonsDown[event.button] = true;
-        });
-        win.addEventListener("mouseup", (event) => {
-            this.mouseButtonsDown[event.button] = false;
-        });
-        win.addEventListener("mousemove", (event) => {
-            this._updateMousePosition(event.clientX, event.clientY);
-        });
+                this.touches[index] = mousePosition;
+                this.mousePosition = mousePosition;
+            });
     }
 
     _updateMousePosition(x, y) {
@@ -47,7 +53,7 @@ class _Input {
     }
 
     isMouseButtonPressed(mouseButton) {
-        return this.mouseButtonsDown[mouseButton];
+        return this.activeTouchIndex > -1;
     }
 
 }

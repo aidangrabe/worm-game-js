@@ -7,6 +7,7 @@ const Vector = Victor;
 const Container = PIXI.Container;
 const Graphics = PIXI.Graphics;
 const Loader = PIXI.loader;
+const Rect = PIXI.Rectangle;
 const Sprite = PIXI.Sprite;
 const Text = PIXI.Text;
 
