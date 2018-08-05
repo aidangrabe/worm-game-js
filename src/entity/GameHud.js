@@ -36,7 +36,7 @@ class GameHud extends Actor {
     }
 
     update(delta) {
-        this.scoreText.text = `Score: ${this.scoreKeeper.score}`;
+        this.scoreText.text = `Score: [x${this.scoreKeeper.multiplier}] ${this.scoreKeeper.score}`;
     }
 
     /**

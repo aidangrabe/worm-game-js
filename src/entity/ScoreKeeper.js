@@ -10,6 +10,8 @@ class ScoreKeeper extends Actor {
         this.score = 0;
         this.baseScoreNumber = 10;
         this.multiplier = 1;
+
+        this.resetComboCounter();
     }
 
     /**
@@ -18,7 +20,8 @@ class ScoreKeeper extends Actor {
     increment() {
         this.score += this.baseScoreNumber * this.multiplier;
 
-        this.multiplier += 0.5;
+        this.multiplier += 1;
+        this.resetComboCounter();
     }
 
     /**
@@ -29,7 +32,19 @@ class ScoreKeeper extends Actor {
     }
 
     update(delta) {
-        // TODO slowly decay the multiplier
+        // decrement the combo counter
+        this.comboCounter -= delta;
+
+        // check if the current multiplier has expired
+        if (this.comboCounter < 0 && this.multiplier > 1) {
+            this.multiplier -= 1;
+            this.resetComboCounter();
+        }
+    }
+
+    resetComboCounter() {
+        // target fps * number of seconds for combo to last
+        this.comboCounter = 60 * 2;
     }
 
 }
