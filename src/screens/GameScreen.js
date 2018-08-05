@@ -1,3 +1,7 @@
+// the amount of time the Game Over text will be shown before the user is 
+// allowed to restart the game (in milliseconds)
+const GAME_OVER_RESTART_DELAY = 1000;
+
 /**
  * The actual game screen that handles adding the entities to the main stage.
  */
@@ -61,7 +65,11 @@ class GameScreen extends Screen {
     }
 
     onWormHitBody() {
-        this.gameIsOver = true;
+        // don't set the game over state until we've waiting some time so that
+        // the player doesn't accidentally skip the game over/score screen
+        setTimeout((e) => {
+            this.gameIsOver = true;
+        }, GAME_OVER_RESTART_DELAY);
 
         this.worm.kill();
 
