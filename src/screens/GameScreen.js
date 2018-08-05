@@ -10,9 +10,12 @@ class GameScreen extends Screen {
     enter() {
         super.enter();
 
+        this.gameIsOver = false;
+
         this.worm = new Worm(this, this);
         this.bodyPartLayer = new Container();
         this.scoreKeeper = new ScoreKeeper();
+        this.hud = new GameHud(this, this.scoreKeeper);
 
         this.earthLayer = new EarthLayer(this.worm);
         this.nutrient = new Nutrient(this);
@@ -30,9 +33,14 @@ class GameScreen extends Screen {
         // extra managers
         this.addActor(this.scoreKeeper);
         this.addActor(new CollisionManager(this.worm, this.nutrient, this));
-        this.addActor(new GameHud(this, this.scoreKeeper));
+        this.addActor(this.hud);
+    }
 
-        // TODO add HUD
+    onClick(event) {
+        if (this.gameIsOver) {
+            this.removeAllActors();
+            this.enter();
+        }
     }
 
     onCreateBodyPart(bodyPart) {
@@ -53,7 +61,11 @@ class GameScreen extends Screen {
     }
 
     onWormHitBody() {
+        this.gameIsOver = true;
+
         this.worm.kill();
+
+        this.hud.showGameOver();
     }
 
 }

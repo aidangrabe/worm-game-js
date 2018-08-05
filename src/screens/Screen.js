@@ -13,12 +13,22 @@ class Screen {
     leave() {
     }
 
+    /**
+     * Called when the stage was clicked. Subclasses can override this function
+     * to handle clicks.
+     * 
+     * @param {PIXI.InteractionEvent} mouseEvent the mouse event that was 
+     * triggered by the user.
+     */
+    onClick(mouseEvent) {
+    }
+
     preUpdate(delta) {
     }
 
     update(delta) {
         const actors = this.actors;
-        
+
         for (const actor of actors) {
             actor.update(delta);
         }
@@ -29,6 +39,11 @@ class Screen {
         if (actor.sprite) {
             this.stage.addChild(actor.sprite);
         }
+    }
+
+    removeAllActors() {
+        this.actors = [];
+        this.stage.removeChildren();
     }
 
     get width() {

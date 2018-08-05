@@ -4,6 +4,7 @@ class _Input {
         this.keysDown = new Array(120);
         this.touches = {};
         this.activeTouchIndex = -1;
+        this.onClickListener = (event) => {};
 
         this.mousePosition = {
             x: -1, y: -1
@@ -33,6 +34,7 @@ class _Input {
                 if (this.activeTouchIndex == e.data.identifier) {
                     this.activeTouchIndex = -1;
                 }
+                this.onClickListener(e);
             })
             .on('pointermove', (e) => {
                 const index = e.data.identifier;
@@ -54,6 +56,10 @@ class _Input {
 
     isMouseButtonPressed(mouseButton) {
         return this.activeTouchIndex > -1;
+    }
+
+    setOnClickListener(listener) {
+        this.onClickListener = listener;
     }
 
 }

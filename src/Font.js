@@ -10,7 +10,13 @@ const Font = {
     ScoreText: {
         fill: '#FFFFFF',
         fontFamily: 'Arial',
-        fontSize: '16px'
+        fontSize: '16px',
+    },
+
+    GameOver: {
+        fill: '#FFFFFF',
+        fontFamily: 'Arial',
+        fontSize: '48px'
     }
 
 }

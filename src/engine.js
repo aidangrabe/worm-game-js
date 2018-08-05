@@ -28,17 +28,20 @@ class Engine {
         // the stage hitArea needs to be set manually, or the touch/click events
         // will only trigger on Sprites within the stage that get clicked
         mainStage.hitArea = new Rect(0, 0, width, height);
+
         Input.attachListeners(mainStage);
+        Input.setOnClickListener((event) => this._currentScreen.onClick(event));
 
         this._currentScreen = null;
     }
 
     set currentScreen(screen) {
         const currentScreen = this._currentScreen;
+        const mainStage = this.mainStage;
 
         // handle old screen events
         if (currentScreen != null) {
-            this.app.stage.removeChild(currentScreen.stage);
+            mainStage.removeChild(currentScreen.stage);
             // currentScreen.stage.removeChild(currentScreen.stage);
             currentScreen.leave();
         }
@@ -49,7 +52,7 @@ class Engine {
         screen.bounds = this.app.screen;
         screen.enter();
 
-        this.app.stage.addChild(screen.stage);
+        mainStage.addChild(screen.stage);
         this._currentScreen = screen;
     }
 
@@ -75,9 +78,9 @@ class Engine {
      * window.
      */
     stretchToFitScreen() {
-        const app = this.app;
-        app.view.style.width = window.innerWidth + "px";
-        app.view.style.height = window.innerHeight + "px";
+        const style = this.app.view.style;
+        style.width = window.innerWidth + "px";
+        style.height = window.innerHeight + "px";
     }
 
 }
