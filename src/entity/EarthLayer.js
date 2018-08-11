@@ -8,26 +8,34 @@
  */
 class EarthLayer extends Actor {
 
-    constructor(worm) {
+    constructor() {
         const graphics = new Graphics();
         super(graphics);
 
         this.graphics = graphics;
-        this.worm = worm;
-
-        this.EARTH_COLOR = 0x6B3708;
-        this.EAT_COLOR = 0x9B500D;
     }
 
-    update(delta) {
+    static get EARTH_COLOR() {
+        return 0x9B500D;
+    }
+
+    static get EAT_COLOR() {
+        return 0x6B3708;
+    }
+
+    /**
+     * Dig a hole in the earth.
+     * 
+     * @param {Sprite} sprite the Sprite that will eat away the earth. The 
+     * radius will be half the width of the Sprite.
+     */
+    eat(sprite) {
         const graphics = this.graphics;
-        const wormSprite = this.worm.sprite;
-        const wormPosition = wormSprite.position;
-        const eatHoleRadius = wormSprite.width / 2;
+        const radius = sprite.width / 2;
 
         // draw the eat hole for the worm
-        graphics.beginFill(this.EARTH_COLOR);
-        graphics.drawCircle(wormPosition.x, wormPosition.y, eatHoleRadius);
+        graphics.beginFill(EarthLayer.EAT_COLOR);
+        graphics.drawCircle(sprite.x, sprite.y, radius);
         graphics.endFill();
     }
 

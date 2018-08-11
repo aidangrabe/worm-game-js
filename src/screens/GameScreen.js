@@ -21,11 +21,11 @@ class GameScreen extends Screen {
         this.scoreKeeper = new ScoreKeeper();
         this.hud = new GameHud(this, this.scoreKeeper);
 
-        this.earthLayer = new EarthLayer(this.worm);
+        this.earthLayer = new EarthLayer();
         this.nutrient = new Nutrient(this);
         this.nutrient.jumpToRandomPlace();
 
-        this.backgroundColor = this.earthLayer.EAT_COLOR;
+        this.backgroundColor = EarthLayer.EARTH_COLOR;
 
         // layers
         this.addActor(this.earthLayer);
@@ -38,6 +38,12 @@ class GameScreen extends Screen {
         this.addActor(this.scoreKeeper);
         this.addActor(new CollisionManager(this.worm, this.nutrient, this));
         this.addActor(this.hud);
+    }
+
+    update(delta) {
+        super.update(delta);
+
+        this.earthLayer.eat(this.worm.sprite);
     }
 
     onClick(event) {

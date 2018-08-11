@@ -5,8 +5,12 @@ class _Game extends Engine {
 
         this.currentScreen = new LoadingScreen(Assets, Sound, (assets) => {
             this.assets = assets;
-            this.currentScreen = new GameScreen();
+            this.currentScreen = new MenuScreen(this);
         });
+    }
+
+    onStartGame() {
+        this.currentScreen = new GameScreen();
     }
 
 }
