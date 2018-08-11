@@ -16,12 +16,17 @@ class ScoreKeeper extends Actor {
 
     /**
      * Increment the score, using the multiplier.
+     * 
+     * @returns {Number} the number that was added to the score.
      */
     increment() {
-        this.score += this.baseScoreNumber * this.multiplier;
+        const scoreToAdd = this.baseScoreNumber * this.multiplier;
+        this.score += scoreToAdd;
 
         this.multiplier += 1;
         this.resetComboCounter();
+
+        return scoreToAdd;
     }
 
     /**

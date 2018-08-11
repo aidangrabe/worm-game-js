@@ -41,6 +41,20 @@ class Screen {
         }
     }
 
+    /**
+     * Remove the given Actor from the Screen.
+     * 
+     * @param {Actor} actor the actor to remove from the Screen.
+     */
+    removeActor(actor) {
+        const index = this.actors.indexOf(actor);
+        if (index > 0) {
+            this.actors.splice(index, 1);
+        }
+
+        this.stage.removeChild(actor.sprite);
+    }
+
     removeAllActors() {
         this.actors = [];
         this.stage.removeChildren();
