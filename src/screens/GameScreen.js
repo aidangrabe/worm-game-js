@@ -16,6 +16,7 @@ class GameScreen extends Screen {
 
         this.gameIsOver = false;
 
+        this.stageShaker = new StageShaker(this.stage);
         this.worm = new Worm(this, this);
         this.bodyPartLayer = new Container();
         this.scoreKeeper = new ScoreKeeper();
@@ -33,6 +34,7 @@ class GameScreen extends Screen {
 
         this.addActor(this.worm);
         this.addActor(this.nutrient);
+        this.addActor(this.stageShaker);
 
         // extra managers
         this.addActor(this.scoreKeeper);
@@ -69,6 +71,7 @@ class GameScreen extends Screen {
 
         const pointsScored = this.scoreKeeper.increment();
         this.createFadeAwayScore(pointsScored);
+        this.stageShaker.shake(5, 0.25);
 
         Sound.play("wormEat");
     }

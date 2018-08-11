@@ -17,6 +17,8 @@ class FadeAwayText extends Actor {
     }
 
     update(delta) {
+        super.update(delta);
+
         const text = this.text;
 
         // fade away
