@@ -7,6 +7,12 @@ const Font = {
         fontSize: '48px'
     },
 
+    Debug: {
+        fill: '#FFFFFF',
+        fontFamily: 'Arial',
+        fontSize: '12px'
+    },
+
     // the text shown when the Worm eats a nutrient and leaves fade away text.
     EatScore: {
         fill: '#FFFFFF',

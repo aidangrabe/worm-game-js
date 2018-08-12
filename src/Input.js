@@ -3,8 +3,13 @@ class _Input {
     constructor(win) {
         this.keysDown = new Array(120);
         this.touches = {};
+
+        for (let i = 0; i < 5; i++) {
+            this.touches[i] = { x: -1, y: -1 };
+        }
+
         this.activeTouchIndex = -1;
-        this.onClickListener = (event) => {};
+        this.onClickListener = (event) => { };
 
         this.mousePosition = {
             x: -1, y: -1
@@ -27,6 +32,7 @@ class _Input {
     attachListeners(stage) {
         stage
             .on('pointerdown', (e) => {
+                log(e.data);
                 this.activeTouchIndex = e.data.identifier;
                 this.mousePosition = e.data.global;
             })

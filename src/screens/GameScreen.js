@@ -40,6 +40,8 @@ class GameScreen extends Screen {
         this.addActor(this.scoreKeeper);
         this.addActor(new CollisionManager(this.worm, this.nutrient, this));
         this.addActor(this.hud);
+
+        this.addActor(new DebugHud());
     }
 
     update(delta) {
