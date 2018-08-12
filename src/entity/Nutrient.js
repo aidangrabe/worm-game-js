@@ -22,22 +22,47 @@ class Nutrient extends Actor {
      * free, try to jump again until a free spot is found.
      */
     jumpToRandomPlace() {
-        const sprite = this.sprite;
+        // counter to make sure we don't loop for ever!
+        let i = 0;
 
         // keep jumping to random places until one is free
         do {
+            i++;
             this._moveToRandomPosition()
-        } while (!this._isPositionFree(sprite.x, sprite.y));
+        } while (!this._isNewPositionFree() && i < 3);
     }
 
     /**
-     * Check if the position given by (x, y) is collision free.
+     * Check if the new position of the Nutrient is free (it is not intersecting
+     * a body part or the worms head).
      */
-    _isPositionFree(x, y) {
-        const sprite = this.sprite;
+    _isNewPositionFree() {
+        const nutrientSprite = this.sprite;
+        const wormSprite = this.worm.sprite;
+        const bodyParts = this.worm.body;
 
-        // TODO check against the body parts too
-        return Util.Math.pointInCircle(x, y, sprite.x, sprite.y, sprite.width / 2);
+        // check to see if the new position is intersecting with a body part
+        for (const part of bodyParts) {
+            const partSprite = part.sprite;
+            const positionOccupied = Util.Math.circlesIntersect(
+                // first circle
+                nutrientSprite.x, nutrientSprite.y, nutrientSprite.width / 2,
+                // second circle
+                partSprite.x, partSprite.y, partSprite.width / 2
+            );
+
+            if (positionOccupied) {
+                return false;
+            }
+        }
+
+        // check to see if the new position is intersecting with the worms head
+        return !Util.Math.circlesIntersect(
+            // first circle
+            nutrientSprite.x, nutrientSprite.y, nutrientSprite.width / 2,
+            // second circle
+            wormSprite.x, wormSprite.y, wormSprite.width / 2
+        );
     }
 
     /**

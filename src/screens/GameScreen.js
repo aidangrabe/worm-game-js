@@ -23,7 +23,7 @@ class GameScreen extends Screen {
         this.hud = new GameHud(this, this.scoreKeeper);
 
         this.earthLayer = new EarthLayer();
-        this.nutrient = new Nutrient(this);
+        this.nutrient = new Nutrient(this, this.worm);
         this.nutrient.jumpToRandomPlace();
 
         this.backgroundColor = EarthLayer.EARTH_COLOR;
@@ -66,12 +66,13 @@ class GameScreen extends Screen {
     }
 
     onWormHitNutrient() {
-        this.nutrient.jumpToRandomPlace();
         this.worm.lengthen(15);
 
         const pointsScored = this.scoreKeeper.increment();
         this.createFadeAwayScore(pointsScored);
         this.stageShaker.shake(5, 0.25);
+
+        this.nutrient.jumpToRandomPlace();
 
         Sound.play("wormEat");
     }
@@ -93,14 +94,15 @@ class GameScreen extends Screen {
      * that was just added.
      */
     createFadeAwayScore(pointsScored) {
-        // TODO give a proper font
-        // TODO put these on the earth layer
-        const text = new FadeAwayText(this.worm.sprite.x, this.worm.sprite.y, pointsScored, this);
-        text.sprite.anchor = CenterAnchor;
-        text.sprite.pivot = CenterAnchor;
-        text.sprite.rotation = Util.Math.random(-0.2, 0.2);
+        const nutrientSprite = this.nutrient.sprite;
+
+        const text = new FadeAwayText(nutrientSprite.x, nutrientSprite.y, pointsScored, this);
+        const textSprite = text.sprite;
+
+        textSprite.anchor = CenterAnchor;
+        textSprite.rotation = Util.Math.random(-0.2, 0.2);
+
         this.addActor(text);
-        return text;
     }
 
     onTextFadedAway(text) {
