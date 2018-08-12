@@ -7,17 +7,24 @@ class GameHud extends Actor {
         const hudContainer = new Container();
         super(hudContainer);
 
-        this.scoreText = new Text("Score: 0", Font.ScoreText);
-        this.scoreText.x = 5;
-        this.scoreText.y = 5;
+        this.scoreText = this.createScoreText();
+        this.gameOverText = this.createGameOverText(hudContainer);
+        this.comboText = this.createComboText(hudContainer);
 
         hudContainer.addChild(this.scoreText);
-
-        this.gameOverText = this.createGameOverText(hudContainer);
 
         this.screen = screen;
         this.scoreKeeper = scoreKeeper;
         this.hudContainer = hudContainer;
+
+        this.oldCombo = 1;
+    }
+
+    createScoreText() {
+        const text = new Text("Score: 0", Font.ScoreText);
+        text.x = 5;
+        text.y = 5;
+        return text;
     }
 
     createGameOverText(container) {
@@ -35,8 +42,39 @@ class GameHud extends Actor {
         return text;
     }
 
-    update(delta) {
-        this.scoreText.text = `Score: [x${this.scoreKeeper.multiplier}] ${this.scoreKeeper.score}`;
+    createComboText(container) {
+        const text = new Text("1x", Font.ScoreText);
+        text.anchor = { x: 1, y: 0 };
+
+        text.x = Game.WIDTH - text.width - 5;
+        text.y = 5;
+
+        container.addChild(text);
+
+        return text;
+    }
+
+    update(_) {
+        const combo = this.scoreKeeper.multiplier;
+
+        if (this.comboText.scale.x > 1.1) {
+            this.comboText.scale.x *= 0.9;
+            this.comboText.scale.y *= 0.9;
+        } else {
+            this.comboText.scale.x = 1;
+        }
+
+        if (this.oldCombo != combo) {
+            // animate!
+            this.comboText.scale.x = 2;
+            this.comboText.scale.y = 2;
+
+            this.calculateComboColor(combo);
+        }
+        this.oldCombo = combo;
+
+        this.scoreText.text = `Score: ${this.scoreKeeper.score}`;
+        this.comboText.text = `x${combo}`;
     }
 
     /**
@@ -44,6 +82,20 @@ class GameHud extends Actor {
      */
     showGameOver() {
         this.gameOverText.visible = true;
+    }
+
+    calculateComboColor(combo) {
+        const comboTextStyle = this.comboText.style;
+
+        if (combo >= 10) {
+            comboTextStyle.fill = R.color.comboTextLarge;
+        } else if (combo >= 7) {
+            comboTextStyle.fill = R.color.comboTextMedium;
+        } else if (combo >= 3) {
+            comboTextStyle.fill = R.color.comboTextSmall;
+        } else {
+            comboTextStyle.fill = R.color.white;
+        }
     }
 
 }
