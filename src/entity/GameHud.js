@@ -7,6 +7,7 @@ class GameHud extends Actor {
         const hudContainer = new Container();
         super(hudContainer);
 
+        this.gameOverScrim = this.createGameOverScrim(hudContainer);
         this.scoreText = this.createScoreText();
         this.gameOverText = this.createGameOverText(hudContainer);
         this.comboText = this.createComboText(hudContainer);
@@ -18,6 +19,19 @@ class GameHud extends Actor {
         this.hudContainer = hudContainer;
 
         this.oldCombo = 1;
+    }
+
+    createGameOverScrim(container) {
+        const scrim = new Graphics();
+        scrim.beginFill(R.color.black);
+        scrim.drawRect(0, 0, Game.WIDTH, Game.HEIGHT);
+        scrim.endFill();
+
+        scrim.alpha = 0.2;
+        scrim.visible = false;
+
+        container.addChild(scrim);
+        return scrim;
     }
 
     createScoreText() {
@@ -82,6 +96,7 @@ class GameHud extends Actor {
      */
     showGameOver() {
         this.gameOverText.visible = true;
+        this.gameOverScrim.visible = true;
     }
 
     calculateComboColor(combo) {
