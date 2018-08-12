@@ -17,6 +17,7 @@ class MenuScreen extends Screen {
             gravity: "center"
         });
 
+        container.addChild(this.createTitleLogo());
         container.addChild(this.createTitleText());
         container.addChild(this.createPlayButton());
         container.center(Game.WIDTH / 2, Game.HEIGHT / 2);
@@ -26,6 +27,11 @@ class MenuScreen extends Screen {
     }
 
     leave() {
+    }
+
+    createTitleLogo() {
+        const sprite = Sprite.fromImage(Assets.sprite.titleLogo);
+        return sprite;
     }
 
     createTitleText() {
